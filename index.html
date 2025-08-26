@@ -64,7 +64,7 @@
         <header class="bg-white shadow-sm sticky top-0 z-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-800 text-center sm:text-left">Lightcraft Marketing Dashboard</h1>
+                    <h1 class="text-2xl font-bold text-green-600 text-center sm:text-left">Lightcraft Marketing Dashboard</h1>
                     <p class="text-sm text-gray-500 text-center sm:text-left">An Independent Consultant's Review</p>
                 </div>
             </div>
@@ -73,43 +73,53 @@
         <nav class="bg-white border-b border-gray-200">
             <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
                 <div class="flex flex-wrap justify-center sm:justify-between space-x-2 sm:space-x-8" id="nav-links">
-                    <a href="#overview" class="nav-link active py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">Executive Overview</a>
-                    <a href="#sem" class="nav-link py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">SEM Deep Analysis</a>
-                    <a href="#smm" class="nav-link py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">SMM Deep Analysis</a>
-                    <a href="#proposal" class="nav-link py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">My 3rd Party Recommendations</a>
+                    <a href="#overview" class="nav-link active py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">Overview</a>
+                    <a href="#sem" class="nav-link py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">SEM Deep Dive</a>
+                    <a href="#smm" class="nav-link py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">SMM Deep Dive</a>
+                    <a href="#proposal" class="nav-link py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">Recommendations</a>
                 </div>
             </div>
         </nav>
 
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <section id="how-to-use" class="mb-12 bg-indigo-50 p-6 rounded-lg border border-indigo-200">
-                <h3 class="text-lg sm:text-xl font-bold text-indigo-800 mb-2">How to Use This Dashboard</h3>
+            <section id="how-to-use" class="mb-12 bg-indigo-50 p-8 rounded-lg border border-indigo-200">
+                <h3 class="text-lg sm:text-xl font-bold text-green-600 mb-2">How to Use This Dashboard</h3>
                 <p class="text-indigo-700 text-sm sm:text-base">This report is designed to be simple. Use the links at the top to jump between sections. Each section has charts and clear descriptions. For a quick look at the data, just move your mouse over the charts to see the exact numbers. The goal is to make sense of your ad spend without the jargon.</p>
             </section>
 
             <!-- Executive Overview Section -->
             <section id="overview" class="section active">
                 <div class="text-center mb-8 sm:mb-12">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Executive Overview</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-green-600">Executive Overview</h2>
                     <p class="mt-2 text-base sm:text-lg text-gray-600">A high-level look at where your marketing dollars are going and what they're returning.</p>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
                     <div class="kpi-card text-center">
-                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">Total Ad Spend</h3>
+                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">Total Ad Spend (Jan-Jul)</h3>
                         <p class="text-2xl sm:text-4xl font-bold text-gray-900 mt-2">$29,605</p>
                     </div>
                     <div class="kpi-card text-center">
-                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">SEM Conversions</h3>
+                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">SEM Conversions (Jan-Jul)</h3>
                         <p class="text-2xl sm:text-4xl font-bold text-green-600 mt-2">14,816</p>
                     </div>
                     <div class="kpi-card text-center">
-                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">SMM Conversions</h3>
+                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">SMM Conversions (Jan-Jul)</h3>
                         <p class="text-2xl sm:text-4xl font-bold text-red-600 mt-2">1</p>
                     </div>
                     <div class="kpi-card text-center">
-                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">Proposed Budget</h3>
+                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">Proposed Budget (Annual)</h3>
                         <p class="text-2xl sm:text-4xl font-bold text-indigo-600 mt-2">$78,000</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 sm:mt-12 bg-white p-8 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-xl sm:text-2xl font-bold text-green-600 text-center">Key Findings at a Glance</h3>
+                    <div class="mt-6 space-y-4 text-sm sm:text-base text-gray-800">
+                        <p><span class="font-bold text-green-600">The Good News:</span></p>
+                        <p>Your SEM campaign is driving results and is highly profitable. Your brand keywords and targeted product ads are performing exceptionally well at a very low cost, which is a testament to your brand's reputation.</p>
+                        <p><span class="font-bold text-red-600">Areas for Concern:</span></p>
+                        <p>Your social media campaign is a financial drain, generating high traffic but zero sales. A portion of your SEM budget is being spent on underperforming generic and competitor keywords, which is a costly and inefficient use of funds.</p>
                     </div>
                 </div>
 
@@ -120,22 +130,12 @@
                         <canvas id="overviewChart"></canvas>
                     </div>
                 </div>
-
-                <div class="mt-8 sm:mt-12 bg-white p-8 rounded-lg shadow-sm border border-gray-200">
-                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 text-center">Key Findings at a Glance</h3>
-                    <div class="mt-6 space-y-4 text-sm sm:text-base text-gray-800">
-                        <p><span class="font-bold text-green-600">The Good News:</span></p>
-                        <p>Your SEM campaign is driving results and is highly profitable. Your brand keywords and targeted product ads are performing exceptionally well at a very low cost, which is a testament to your brand's reputation.</p>
-                        <p><span class="font-bold text-red-600">Areas for Concern:</span></p>
-                        <p>Your social media campaign is a financial drain, generating high traffic but zero sales. A portion of your SEM budget is being spent on underperforming generic and competitor keywords, which is a costly and inefficient use of funds.</p>
-                    </div>
-                </div>
             </section>
 
             <!-- SEM Deep Dive Section -->
             <section id="sem" class="section">
                 <div class="text-center mb-8 sm:mb-12">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">SEM Deep Dive</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-green-600">SEM Deep Dive</h2>
                     <p class="mt-2 text-base sm:text-lg text-gray-600">Analyzing the engine of your lead generation.</p>
                 </div>
                 
@@ -166,7 +166,7 @@
                         </div>
                         <div class="prose max-w-none">
                             <h3 class="text-base sm:text-xl font-semibold text-gray-800">The Value of Your Brand</h3>
-                            <p class="text-sm sm:text-base">This breakdown is telling. Your investment in ads targeting your own brand name ("Lightcraft") is wildly profitable, converting users at an extremely high rate (187%). This means people are already looking for you, and these ads ensure they find you first.</p>
+                            <br><p class="text-sm sm:text-base">This breakdown is telling. Your investment in ads targeting your own brand name ("Lightcraft") is wildly profitable, converting users at an extremely high rate (187%). This means people are already looking for you, and these ads ensure they find you first.</p></br>
                             <br><p class="text-sm sm:text-base">Conversely, the campaign targeting competitors is less efficient and has a higher cost. While it serves a defensive purpose, it's crucial to question if that budget could be reallocated to more profitable areas, like expanding on high-performing generic keywords.</p></br>
                         </div>
                     </div>
@@ -218,7 +218,7 @@
             <!-- SMM Deep Dive Section -->
             <section id="smm" class="section">
                 <div class="text-center mb-8 sm:mb-12">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">SMM Deep Dive</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-green-600">SMM Deep Dive</h2>
                     <p class="mt-2 text-base sm:text-lg text-gray-600">Evaluating your social media investment.</p>
                 </div>
                 
@@ -258,7 +258,7 @@
             <!-- Recommendations Section -->
             <section id="proposal" class="section">
                 <div class="text-center mb-8 sm:mb-12">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Consultant's Recommendations & Key Questions</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-green-600">Consultant's Recommendations & Key Questions</h2>
                     <p class="mt-2 text-base sm:text-lg text-gray-600">A comprehensive, proactive plan to maximize your profitability across all channels.</p>
                 </div>
                 
@@ -278,28 +278,33 @@
                     
                     <div class="mt-6 sm:mt-8 space-y-6">
                         <div>
-                            <h4 class="font-semibold text-lg sm:text-xl text-green-600 mb-2">For Social Media Marketing (SMM): The "Test & Learn" Approach</h4>
+                            <h4 class="font-semibold text-lg sm:text-xl text-green-600 mb-2">A. For Social Media Marketing (SMM): The "Test & Learn" Approach</h4>
                             <div class="space-y-4 text-sm sm:text-base text-gray-600">
-                                <br><p><span class="font-bold">Reduce to a "Test & Learn" Budget:</span> Reduce the SMM budget to a manageable amount, like <span class="font-bold">$500 per month</span>, to be used exclusively for targeted tests. This minimizes financial risk while you find a profitable formula.</p></br>
+                                <p><span class="font-bold">Reduce to a "Test & Learn" Budget:</span> Reduce the SMM budget to a manageable amount, like <span class="font-bold">$500 per month</span>, to be used exclusively for targeted tests. This minimizes financial risk while you find a profitable formula.</p>
+                                <br>
                                 <p><span class="font-bold">Run Sprint Tests on Ad Creative & Audiences:</span> You will run short, focused tests to quickly find what works. You'll create and test high-quality video ads against existing formats and test new audience segments to find your most ideal clientele.</p>
-                                <br><p><span class="font-bold">Audit the "Off-Ramps" (Landing Pages):</span> You must urgently audit the pages your ads are sending people to. Is the page loading fast? Is it easy to buy? Does the message match the ad? The campaign is failing at this stage, and fixing it is critical for conversions.</p></br>
+                                <br>
+                                <p><span class="font-bold">Audit the "Off-Ramps" (Landing Pages):</span> You must urgently audit the pages your ads are sending people to. Is the page loading fast? Is it easy to buy? Does the message match the ad? The campaign is failing at this stage, and fixing it is critical for conversions.</p>
                             </div>
                         </div>
                         
                         <div>
-                            <h4 class="font-semibold text-lg sm:text-xl text-green-600 mb-2">For Search Engine Marketing (SEM): The "Optimize & Protect" Approach</h4>
+                            <h4 class="font-semibold text-lg sm:text-xl text-green-600 mb-2">B. For Search Engine Marketing (SEM): The "Optimize & Protect" Approach</h4>
                             <div class="space-y-4 text-sm sm:text-base text-gray-600">
-                                <br><p><span class="font-bold">Demand a Conversion Tracking Audit:</span> This is non-negotiable. Before any new campaigns, work with your agency to separate and track the value of each conversion action (e.g., phone calls, sales). This will provide you with the true data needed to measure ROI.</p></br>
+                                <p><span class="font-bold">Demand a Conversion Tracking Audit:</span> This is non-negotiable. Before any new campaigns, work with your agency to separate and track the value of each conversion action (e.g., phone calls, sales). This will provide you with the true data needed to measure ROI.</p>
+                                <br>
                                 <p><span class="font-bold">Reallocate Budget from Underperformers:</span> Shift money away from generic and less-efficient competitor keywords to your top-performing brand and product keywords. This will make your current campaigns even more profitable.</p>
+                                <br>
                                 <p><span class="font-bold">Refine Ad Creative and Messaging:</span> Even with strong performance, there's always room for improvement. Create new ad variations that highlight specific benefits like "Free Delivery" or "60% Off" to improve your click-through and conversion rates.</p>
-                                <br><p><span class="font-bold">Adopt Generative Engine Marketing (GEM):</span> Your agency should explore how to make your brand visible in AI-powered search results and citations. This new form of search engine presence is a key area for growth and protecting your brand from emerging competitors.</p></br>
+                                <br>
+                                <p><span class="font-bold">Adopt Generative Engine Marketing (GEM):</span> Your agency should explore how to make your brand visible in AI-powered search results and citations. This new form of search engine presence is a key area for growth and protecting your brand from emerging competitors.</p>
                             </div>
                         </div>
                         
                         <div>
-                            <h4 class="font-semibold text-lg sm:text-xl text-green-600 mb-2">For Performance Max (PMAX): The "Strategic Pilot"</h4>
+                            <h4 class="font-semibold text-lg sm:text-xl text-green-600 mb-2">C. For Performance Max (PMAX): The "Strategic Pilot"</h4>
                             <div class="space-y-4 text-sm sm:text-base text-gray-600">
-                                <br><p><span class="font-bold">Pilot with a Clear Goal:</span> Launch PMAX only after conversion tracking is fixed. Use a small budget as a test, with the goal of finding new customers who are similar to your most profitable existing customers.</p></br>
+                                <p><span class="font-bold">Pilot with a Clear Goal:</span> Launch PMAX only after conversion tracking is fixed. Use a small budget as a test, with the goal of finding new customers who are similar to your most profitable existing customers.</p>
                             </div>
                         </div>
                     </div>
@@ -309,7 +314,7 @@
                     <h3 class="text-xl sm:text-2xl font-bold text-green-600 text-center">Important: Untapped Market Opportunity</h3>
                     <div class="mt-6 space-y-4 text-sm sm:text-base text-gray-800">
                         <p><span class="font-bold">What is Generative Engine Marketing (GEM)?</span></p>
-                        <p>In today's digital world, AI tools like Gemini and ChatGPT are becoming "answer engines," not just search engines. People are asking them questions like, "What's the best light fixture for my bedroom?" and the AI gives them a direct, curated answer. **GEM is the strategy to ensure your brand is cited in those answers.**</p>
+                        <p>GEM is a new, untapped way for your brand to appear in AI search results and citations. Think of it as a new digital billboard for your company that the competition hasn't discovered yet. By showing up in these new results, you can get ahead of competitors and protect your brand's digital presence in the future.</p>
                         <br>
                         <p><span class="font-bold">Why is GEM a "Gold Rush"?</span></p>
                         <p>This is a new and underpriced opportunity. While competitors are still focused on traditional search rankings, brands that get cited by AI are getting high-quality customers who are ready to buy. This is because AI traffic is often more engaged and comes from users who have already made up their minds. The brands that move first will win the largest share of this new, highly profitable traffic.</p>
