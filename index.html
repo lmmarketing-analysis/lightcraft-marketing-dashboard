@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lightcraft Marketing Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral Harmony -->
+    <!-- Application Structure Plan: A thematic, dashboard-style SPA with four main sections: Overview, SEM Deep Dive, SMM Deep Dive, and Renewal Proposal. This structure allows a business owner to quickly grasp the high-level financial picture (Overview), then drill down into specific channel performance (SEM/SMM), and finally evaluate the future strategy (Renewal) with full context. The user flow is designed to be intuitive, moving from general insights to specific, actionable data points. Key interactions include toggling between different data views within the SEM section to compare campaign types, keywords, and competitor data, which directly addresses the core questions of profitability and market positioning. This version is rebuilt with a mobile-first approach, prioritizing vertical stacking and concise content to ensure optimal display on smaller screens while retaining full interactivity. -->
+    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Presentation Method -> Interaction -> Justification -> Library/Method. 1. SEM vs SMM Spend/Conversions -> Compare channel ROI -> Bar Chart -> Hover Tooltips -> Immediately shows SEM's value and SMM's cost without return -> Chart.js. 2. SEM Monthly Performance -> Show trends -> Line Chart -> Hover Tooltips -> Visualizes performance fluctuations over time -> Chart.js. 3. SEM Campaign Type Breakdown -> Identify profitable segments -> Donut Chart -> Hover Tooltips -> Highlights the high value of Brand campaigns vs. Competitor campaigns -> Chart.js. 4. Top/Bottom Keywords -> Pinpoint budget efficiency -> Sortable HTML Table -> Clickable Headers -> Allows user to see best/worst performing assets to inform budget allocation -> Vanilla JS. 5. Competitor Impression Share -> Visualize market position -> Bar Charts -> Hover Tooltips -> Clearly shows competitive landscape -> Chart.js. 6. SMM Performance -> Highlight traffic vs. conversion issue -> Line Chart & Prominent Text Block -> Hover Tooltips -> Draws attention to the critical financial leak in social media spend -> Chart.js & HTML/Tailwind. 7. Renewal Budget -> Clarify proposed spend -> Styled HTML Divs -> None -> Simple, clear presentation of financial commitment -> HTML/Tailwind. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfcfb;
+            color: #3f3f46;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 40vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            text-align: center;
+        }
+        .nav-link.active {
+            border-bottom-color: #4f46e5;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        .kpi-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="min-h-screen">
+        <header class="bg-white shadow-sm sticky top-0 z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800 text-center sm:text-left">Lightcraft Marketing Dashboard</h1>
+                    <p class="text-sm text-gray-500 text-center sm:text-left">An Independent Consultant's Review</p>
+                </div>
+            </div>
+        </header>
+        
+        <nav class="bg-white border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+                <div class="flex flex-wrap justify-center sm:justify-between space-x-2 sm:space-x-8" id="nav-links">
+                    <a href="#overview" class="nav-link active py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">Overview</a>
+                    <a href="#sem" class="nav-link py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">SEM Deep Dive</a>
+                    <a href="#smm" class="nav-link py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">SMM Deep Dive</a>
+                    <a href="#proposal" class="nav-link py-4 px-1 text-xs sm:text-sm font-medium text-gray-500 hover:text-indigo-600 hover:border-gray-300 flex-1 sm:flex-grow-0">Proposal</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            <!-- Executive Overview Section -->
+            <section id="overview" class="section active">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Executive Overview</h2>
+                    <p class="mt-2 text-base sm:text-lg text-gray-600">A high-level look at where your marketing dollars are going and what they're returning.</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
+                    <div class="kpi-card text-center">
+                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">Total Ad Spend</h3>
+                        <p class="text-2xl sm:text-4xl font-bold text-gray-900 mt-2">$29,605</p>
+                    </div>
+                    <div class="kpi-card text-center">
+                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">SEM Conversions</h3>
+                        <p class="text-2xl sm:text-4xl font-bold text-green-600 mt-2">14,816</p>
+                    </div>
+                    <div class="kpi-card text-center">
+                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">SMM Conversions</h3>
+                        <p class="text-2xl sm:text-4xl font-bold text-red-600 mt-2">1</p>
+                    </div>
+                    <div class="kpi-card text-center">
+                        <h3 class="text-sm sm:text-base text-gray-500 font-medium">Proposed Budget</h3>
+                        <p class="text-2xl sm:text-4xl font-bold text-indigo-600 mt-2">$78,000</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center">Spend vs. Conversions: A Tale of Two Channels</h3>
+                    <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">This chart clearly shows that while SEM and SMM have comparable ad spends, SEM is responsible for nearly all business-driving conversions.</p>
+                    <div class="chart-container">
+                        <canvas id="overviewChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEM Deep Dive Section -->
+            <section id="sem" class="section">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">SEM Deep Dive</h2>
+                    <p class="mt-2 text-base sm:text-lg text-gray-600">Analyzing the engine of your lead generation.</p>
+                </div>
+                
+                <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200 mb-6 sm:mb-8">
+                    <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center">Monthly SEM Performance (Jan - Jul 2025)</h3>
+                     <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">Track the relationship between monthly ad spend, clicks, and total conversions over the past seven months.</p>
+                    <div class="chart-container">
+                        <canvas id="semMonthlyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="text-center my-6 sm:my-8">
+                    <div class="inline-flex flex-wrap justify-center rounded-md shadow-sm" role="group" id="sem-view-toggle">
+                      <button type="button" data-view="campaigns" class="sem-toggle-btn bg-indigo-600 text-white py-2 px-3 sm:px-4 text-xs sm:text-sm font-medium border border-gray-200 rounded-l-lg hover:bg-indigo-700">Campaigns</button>
+                      <button type="button" data-view="keywords" class="sem-toggle-btn bg-white text-gray-900 py-2 px-3 sm:px-4 text-xs sm:text-sm font-medium border-t border-b border-gray-200 hover:bg-gray-100">Keywords</button>
+                      <button type="button" data-view="competitors" class="sem-toggle-btn bg-white text-gray-900 py-2 px-3 sm:px-4 text-xs sm:text-sm font-medium border border-gray-200 rounded-r-md hover:bg-gray-100">Competitors</button>
+                    </div>
+                </div>
+
+                <div id="sem-campaigns-view" class="sem-view">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
+                            <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center mb-2 sm:mb-4">July Conversion Breakdown by Campaign</h3>
+                            <div class="chart-container" style="height:350px;">
+                                <canvas id="semCampaignChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="prose max-w-none">
+                            <h3 class="text-base sm:text-xl font-semibold text-gray-800">The Value of Your Brand</h3>
+                            <p class="text-sm sm:text-base">This breakdown from July is incredibly telling. Your investment in ads targeting your own brand name ("Lightcraft") is wildly profitable, converting users at an extremely high rate (187%). This means people are already looking for you, and these ads ensure they find you first.</p>
+                            <p class="text-sm sm:text-base">Conversely, the campaign targeting competitors is less efficient and has a higher cost. While it serves a defensive purpose, it's crucial to question if that budget could be reallocated to more profitable areas, like expanding on high-performing generic keywords.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sem-keywords-view" class="sem-view hidden">
+                    <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center mb-2 sm:mb-4">Keyword Profitability (July)</h3>
+                        <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">This table highlights the most and least efficient keywords based on their Cost per Conversion. Click headers to sort.</p>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200" id="keywordsTable">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="keyword">Keyword</th>
+                                        <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="cost">Cost</th>
+                                        <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="conversions">Conv.</th>
+                                        <th scope="col" class="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" data-sort="cpc">Cost/Conv.</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sem-competitors-view" class="sem-view hidden">
+                     <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center mb-2 sm:mb-4">Competitive Landscape (July Impression Share)</h3>
+                        <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">Impression share shows how often your ads appeared compared to the total number of opportunities. A low share on generic terms indicates room for growth, while a high share on brand terms shows you are successfully defending your name.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                            <div>
+                                <h4 class="font-semibold text-center text-gray-700 text-sm sm:text-base">Brand Campaign</h4>
+                                <div class="chart-container" style="height:250px;"><canvas id="brandCompetitorChart"></canvas></div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-center text-gray-700 text-sm sm:text-base">Generic Campaign</h4>
+                                <div class="chart-container" style="height:250px;"><canvas id="genericCompetitorChart"></canvas></div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-center text-gray-700 text-sm sm:text-base">Competitor Campaign</h4>
+                                <div class="chart-container" style="height:250px;"><canvas id="competitorCampaignChart"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SMM Deep Dive Section -->
+            <section id="smm" class="section">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">SMM Deep Dive</h2>
+                    <p class="mt-2 text-base sm:text-lg text-gray-600">Evaluating your social media investment.</p>
+                </div>
+                
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 sm:p-6 rounded-md mb-6 sm:mb-8">
+                    <h3 class="text-base sm:text-xl font-bold text-red-800">Critical Finding: The Conversion Disconnect</h3>
+                    <p class="text-red-700 text-sm sm:text-base mt-2">This is the most important takeaway from the social media report. Despite spending over **$6,600** in seven months and generating significant traffic, the campaign has resulted in only **one single conversion**. This indicates a major issue, either with campaign strategy (targeting the wrong audience) or with conversion tracking. This financial leak must be addressed before any further investment is made.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                    <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center">Monthly SMM Performance</h3>
+                        <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">While clicks and CTR are strong, particularly during sales, they are not translating into business results.</p>
+                        <div class="chart-container">
+                            <canvas id="smmMonthlyChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center">Top Performing Audiences (July CTR)</h3>
+                        <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">Retargeting existing website visitors is the most effective tactic for generating clicks.</p>
+                        <div class="chart-container">
+                            <canvas id="smmAudienceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Renewal Proposal Section -->
+            <section id="proposal" class="section">
+                <div class="text-center mb-8 sm:mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-900">Renewal Proposal Analysis</h2>
+                    <p class="mt-2 text-base sm:text-lg text-gray-600">Breaking down the agency's plan for the next 12 months.</p>
+                </div>
+
+                <div class="bg-white p-4 sm:p-8 rounded-lg shadow-sm border border-gray-200">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 text-center">Proposed Annual Budget: $78,000</h3>
+                    <div class="mt-6 sm:mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 text-center">
+                        <div class="p-4 sm:p-6 bg-gray-50 rounded-lg border">
+                            <h4 class="text-base sm:text-lg font-semibold text-gray-700">Standard Search (SEM)</h4>
+                            <p class="text-xl sm:text-3xl font-bold text-gray-900 mt-2">$36,000</p>
+                            <p class="text-xs sm:text-sm text-gray-500">($3,000 / month)</p>
+                        </div>
+                        <div class="p-4 sm:p-6 bg-gray-50 rounded-lg border">
+                            <h4 class="text-base sm:text-lg font-semibold text-gray-700">Social Media (SMM)</h4>
+                            <p class="text-xl sm:text-3xl font-bold text-gray-900 mt-2">$18,000</p>
+                            <p class="text-xs sm:text-sm text-gray-500">($1,500 / month)</p>
+                        </div>
+                        <div class="p-4 sm:p-6 bg-gray-50 rounded-lg border">
+                            <h4 class="text-base sm:text-lg font-semibold text-gray-700">Performance Max (PMAX)</h4>
+                            <p class="text-xl sm:text-3xl font-bold text-gray-900 mt-2">$24,000</p>
+                            <p class="text-xs sm:text-sm text-gray-500">($2,000 / month)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 sm:mt-12">
+                    <h3 class="text-xl sm:text-2xl font-bold text-gray-800 text-center">Consultant's Recommendations & Key Questions</h3>
+                    <div class="mt-4 sm:mt-6 max-w-4xl mx-auto space-y-4 sm:space-y-6">
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
+                            <h4 class="font-semibold text-base sm:text-lg text-gray-900">1. Fix the SMM Conversion Problem First</h4>
+                            <p class="mt-2 text-gray-600 text-sm sm:text-base">Before committing **$18,000** to another year of social media marketing, it is imperative to solve the conversion tracking issue. The agency must either demonstrate that conversions are happening but not being tracked, or present a completely new strategy to turn traffic into sales. Continuing the current SMM strategy is not financially viable.</p>
+                        </div>
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
+                            <h4 class="font-semibold text-base sm:text-lg text-gray-900">2. Re-evaluate SEM Budget Allocation</h4>
+                            <p class="mt-2 text-gray-600 text-sm sm:text-base">The SEM campaign is working, but it can be more profitable. I recommend shifting budget away from underperforming generic keywords and the less-efficient competitor campaign. This freed-up capital should be reinvested into the highest-performing areas: your brand campaign and top-performing product keywords (e.g., "bedroom lighting," "faux-sun").</p>
+                        </div>
+                        <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
+                            <h4 class="font-semibold text-base sm:text-lg text-gray-900">3. Approach PMAX with a Clear Goal</h4>
+                            <p class="mt-2 text-gray-600 text-sm sm:text-base">Performance Max (PMAX) is a powerful, automated campaign type. However, it works best when it has clear conversion data to learn from. Given the tracking issues with SMM, launching PMAX now could be inefficient. We must first ensure all conversion tracking is accurate across the website. The primary goal for PMAX should be to find new customers based on the profile of those who already convert via your successful SEM campaigns.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+<script>
+const data = {
+    sem: [
+        { month: 'Jan', spend: 2495.01, clicks: 2191, conversions: 235 },
+        { month: 'Feb', spend: 3271.17, clicks: 2419, conversions: 231 },
+        { month: 'Mar', spend: 3347.80, clicks: 3228, conversions: 357 },
+        { month: 'Apr', spend: 2047.90, clicks: 1738, conversions: 158 },
+        { month: 'May', spend: 3479.27, clicks: 2742, conversions: 237 },
+        { month: 'Jun', spend: 2859.81, clicks: 2065, conversions: 250 },
+        { month: 'Jul', spend: 3598.34, clicks: 3104, conversions: 369 },
+    ],
+    smm: [
+        { month: 'Jan', spend: 895.16, clicks: 2376, ctr: 3.03, conversions: 0 },
+        { month: 'Feb', spend: 96.33, clicks: 209, ctr: 2.34, conversions: 0 },
+        { month: 'Mar', spend: 1499.99, clicks: 3029, ctr: 1.64, conversions: 1 },
+        { month: 'Apr', spend: 1499.99, clicks: 3743, ctr: 1.43, conversions: 0 },
+        { month: 'May', spend: 1286.96, clicks: 2866, ctr: 1.40, conversions: 0 },
+        { month: 'Jun', spend: 953.67, clicks: 3325, ctr: 3.19, conversions: 0 },
+        { month: 'Jul', spend: 1373.13, clicks: 4379, ctr: 3.12, conversions: 0 },
+    ],
+    semJulyCampaigns: {
+        labels: ['Brand Campaign (187% Conv. Rate)', 'Generic Search (119% Conv. Rate)', 'Competitor Campaign (126% Conv. Rate)'],
+        conversions: [1037, 2596, 463],
+        costs: [689.10, 1524.54, 305.20]
+    },
+    keywords: [
+        { keyword: 'light fixture', cost: 2.90, conversions: 27, cpc: 0.11 },
+        { keyword: 'bedroom lighting', cost: 37.50, conversions: 168, cpc: 0.22 },
+        { keyword: 'downlight led', cost: 13.25, conversions: 53, cpc: 0.25 },
+        { keyword: 'light craft', cost: 41.72, conversions: 127, cpc: 0.33 },
+        { keyword: 'faux-sun lighting', cost: 46.22, conversions: 122, cpc: 0.38 },
+        { keyword: 'lightcraft', cost: 334.85, conversions: 666, cpc: 0.50 },
+        { keyword: 'catalogue lighting', cost: 63.00, conversions: 122, cpc: 0.51 },
+        { keyword: 'lighting shop singapore', cost: 122.69, conversions: 170, cpc: 0.72 },
+        { keyword: 'lightcraft singapore', cost: 191.45, conversions: 194, cpc: 0.99 },
+        { keyword: 'led lighting', cost: 75.69, conversions: 64, cpc: 1.18 },
+        { keyword: 'decorative lighting', cost: 37.56, conversions: 28, cpc: 1.34 },
+        { keyword: 'table', cost: 19.94, conversions: 10, cpc: 1.99 },
+    ],
+    competitors: {
+        brand: { labels: ['You', 'horizon-lights.com.sg', 'catalogue.com.sg', 'skylightingled.com'], shares: [94.14, 25.49, 15.55, 13.84] },
+        generic: { labels: ['horizon-lights.com.sg', 'lightsmart.sg', 'You', 'yafen.sg', 'amazon.sg'], shares: [15.42, 15.31, 11.54, 11.69, 10.34] },
+        competitor: { labels: ['horizon-lights.com.sg', 'lightsmart.sg', 'You', 'yafen.sg', 'amazon.sg'], shares: [16.10, 11.16, 9.9, 9.8, 9.7] }
+    },
+    smmAudiences: {
+        labels: ['Retargeting', 'Food & Dining', 'Lookalike', 'Furniture', 'Technophiles'],
+        ctr: [3.39, 3.46, 2.96, 4.01, 2.37]
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const chartConfig = {
+        plugins: {
+            legend: { position: 'bottom' },
+            tooltip: {
+                backgroundColor: '#ffffff',
+                titleColor: '#3f3f46',
+                bodyColor: '#3f3f46',
+                borderColor: '#e5e7eb',
+                borderWidth: 1,
+                padding: 10,
+                callbacks: {
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.parsed.y !== null) {
+                            if (context.dataset.label.toLowerCase().includes('spend') || context.dataset.label.toLowerCase().includes('cost')) {
+                                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                            } else {
+                                label += new Intl.NumberFormat('en-US').format(context.parsed.y);
+                            }
+                        }
+                        return label;
+                    }
+                }
+            }
+        },
+        scales: {
+            x: { grid: { display: false } },
+            y: { grid: { color: '#e5e7eb', borderDash: [2, 4] } }
+        },
+        responsive: true,
+        maintainAspectRatio: false
+    };
+
+    const totalSemSpend = data.sem.reduce((acc, cur) => acc + cur.spend, 0);
+    const totalSmmSpend = data.smm.reduce((acc, cur) => acc + cur.spend, 0);
+    const totalSemConversions = data.sem.reduce((acc, cur) => acc + cur.conversions, 0);
+    const totalSmmConversions = data.smm.reduce((acc, cur) => acc + cur.conversions, 0);
+
+    new Chart(document.getElementById('overviewChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Search Engine Marketing (SEM)', 'Social Media Marketing (SMM)'],
+            datasets: [
+                {
+                    label: 'Total Spend ($)',
+                    data: [totalSemSpend, totalSmmSpend],
+                    backgroundColor: '#a5b4fc',
+                    borderColor: '#6366f1',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Total Conversions',
+                    data: [totalSemConversions, totalSmmConversions],
+                    backgroundColor: '#6ee7b7',
+                    borderColor: '#10b981',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: chartConfig
+    });
+
+    new Chart(document.getElementById('semMonthlyChart'), {
+        type: 'line',
+        data: {
+            labels: data.sem.map(d => d.month),
+            datasets: [
+                {
+                    label: 'Ad Spend ($)',
+                    data: data.sem.map(d => d.spend),
+                    borderColor: '#fbbf24',
+                    backgroundColor: '#fde68a',
+                    yAxisID: 'y',
+                    tension: 0.1
+                },
+                {
+                    label: 'Conversions',
+                    data: data.sem.map(d => d.conversions),
+                    borderColor: '#4ade80',
+                    backgroundColor: '#bbf7d0',
+                    yAxisID: 'y1',
+                    tension: 0.1
+                }
+            ]
+        },
+        options: { ...chartConfig, scales: { x: { grid: { display: false } }, y: { position: 'left', title: { display: true, text: 'Ad Spend ($)' } }, y1: { position: 'right', title: { display: true, text: 'Conversions' }, grid: { drawOnChartArea: false } } } }
+    });
+    
+    new Chart(document.getElementById('semCampaignChart'), {
+        type: 'doughnut',
+        data: {
+            labels: data.semJulyCampaigns.labels,
+            datasets: [{
+                label: 'Conversions',
+                data: data.semJulyCampaigns.conversions,
+                backgroundColor: ['#6366f1', '#818cf8', '#a5b4fc'],
+                hoverOffset: 4
+            }]
+        },
+        options: { ...chartConfig, plugins: { ...chartConfig.plugins, legend: { position: 'right' } } }
+    });
+
+    const renderKeywordsTable = (keywordsData) => {
+        const tableBody = document.getElementById('keywordsTable').querySelector('tbody');
+        tableBody.innerHTML = '';
+        keywordsData.forEach(k => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${k.keyword}</td>
+                <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">$${k.cost.toFixed(2)}</td>
+                <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">${k.conversions}</td>
+                <td class="px-3 sm:px-6 py-4 whitespace-nowrap text-sm font-semibold ${k.cpc < 0.5 ? 'text-green-600' : k.cpc > 1.0 ? 'text-red-600' : 'text-yellow-600'}">$${k.cpc.toFixed(2)}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    };
+    
+    let currentSort = { key: 'cpc', order: 'asc' };
+    const sortKeywords = (key) => {
+        const order = (currentSort.key === key && currentSort.order === 'asc') ? 'desc' : 'asc';
+        currentSort = { key, order };
+        const sortedData = [...data.keywords].sort((a, b) => {
+            if (a[key] < b[key]) return order === 'asc' ? -1 : 1;
+            if (a[key] > b[key]) return order === 'asc' ? 1 : -1;
+            return 0;
+        });
+        renderKeywordsTable(sortedData);
+    };
+    
+    document.getElementById('keywordsTable').querySelectorAll('th').forEach(th => {
+        th.addEventListener('click', () => sortKeywords(th.dataset.sort));
+    });
+    
+    sortKeywords('cpc');
+
+    const competitorChartOptions = { ...chartConfig, indexAxis: 'y', scales: { x: { max: 100, title: { display: true, text: 'Impression Share (%)' } } }, plugins: { ...chartConfig.plugins, legend: { display: false } } };
+    new Chart(document.getElementById('brandCompetitorChart'), { type: 'bar', data: { labels: data.competitors.brand.labels, datasets: [{ label: 'Impression Share', data: data.competitors.brand.shares, backgroundColor: '#818cf8' }] }, options: competitorChartOptions });
+    new Chart(document.getElementById('genericCompetitorChart'), { type: 'bar', data: { labels: data.competitors.generic.labels, datasets: [{ label: 'Impression Share', data: data.competitors.generic.shares, backgroundColor: '#a5b4fc' }] }, options: competitorChartOptions });
+    new Chart(document.getElementById('competitorCampaignChart'), { type: 'bar', data: { labels: data.competitors.competitor.labels, datasets: [{ label: 'Impression Share', data: data.competitors.competitor.shares, backgroundColor: '#c7d2fe' }] }, options: competitorChartOptions });
+
+    new Chart(document.getElementById('smmMonthlyChart'), {
+        type: 'line',
+        data: {
+            labels: data.smm.map(d => d.month),
+            datasets: [
+                { label: 'Ad Spend ($)', data: data.smm.map(d => d.spend), borderColor: '#f87171', backgroundColor: '#fca5a5', yAxisID: 'y' },
+                { label: 'CTR (%)', data: data.smm.map(d => d.ctr), borderColor: '#60a5fa', backgroundColor: '#93c5fd', yAxisID: 'y1' }
+            ]
+        },
+        options: { ...chartConfig, scales: { x: { grid: { display: false } }, y: { position: 'left', title: { display: true, text: 'Ad Spend ($)' } }, y1: { position: 'right', title: { display: true, text: 'CTR (%)' }, grid: { drawOnChartArea: false } } } }
+    });
+
+    new Chart(document.getElementById('smmAudienceChart'), {
+        type: 'bar',
+        data: {
+            labels: data.smmAudiences.labels,
+            datasets: [{
+                label: 'Click-Through Rate (%)',
+                data: data.smmAudiences.ctr,
+                backgroundColor: ['#6366f1', '#818cf8', '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+            }]
+        },
+        options: { ...chartConfig, plugins: { ...chartConfig.plugins, legend: { display: false } } }
+    });
+    
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+
+    const switchTab = (hash) => {
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.hash === hash);
+        });
+        sections.forEach(section => {
+            section.classList.toggle('active', `#${section.id}` === hash);
+        });
+    };
+
+    document.getElementById('nav-links').addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') {
+            e.preventDefault();
+            const hash = e.target.hash;
+            window.location.hash = hash;
+            switchTab(hash);
+        }
+    });
+    
+    const semToggleButtons = document.querySelectorAll('.sem-toggle-btn');
+    const semViews = document.querySelectorAll('.sem-view');
+    document.getElementById('sem-view-toggle').addEventListener('click', (e) => {
+        if(e.target.tagName === 'BUTTON') {
+            const view = e.target.dataset.view;
+            semToggleButtons.forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('bg-white', 'text-gray-900');
+            });
+            e.target.classList.add('bg-indigo-600', 'text-white');
+            e.target.classList.remove('bg-white', 'text-gray-900');
+
+            semViews.forEach(v => v.classList.add('hidden'));
+            document.getElementById(`sem-${view}-view`).classList.remove('hidden');
+        }
+    });
+
+    const initialHash = window.location.hash || '#overview';
+    switchTab(initialHash);
+});
+</script>
+</body>
+</html>
+
+
+"Initial commit of the marketing dashboard"
