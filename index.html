@@ -82,6 +82,10 @@
         </nav>
 
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <section id="how-to-use" class="mb-12 bg-indigo-50 p-6 rounded-lg border border-indigo-200">
+                <h3 class="text-lg sm:text-xl font-bold text-indigo-800 mb-2">How to Use This Dashboard</h3>
+                <p class="text-indigo-700 text-sm sm:text-base">This report is designed to be simple. Use the links at the top to jump between sections. Each section has charts and clear descriptions. For a quick look at the data, just move your mouse over the charts to see the exact numbers. The goal is to make sense of your ad spend without the jargon. THIS REPORT I BEST VIEWED ON DESKTOP. </p>
+            </section>
 
             <!-- Executive Overview Section -->
             <section id="overview" class="section active">
@@ -111,7 +115,7 @@
 
                 <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
                     <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center">Spend vs. Conversions: A Tale of Two Channels</h3>
-                    <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">This chart clearly shows that while SEM and SMM have comparable ad spends, SEM is responsible for nearly all business-driving conversions.</p>
+                    <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">This chart clearly shows that while SEM and SMM have comparable ad spends, **SEM is responsible for nearly all business-driving conversions**. Hover over the bars to see exact numbers.</p>
                     <div class="chart-container">
                         <canvas id="overviewChart"></canvas>
                     </div>
@@ -127,7 +131,7 @@
                 
                 <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200 mb-6 sm:mb-8">
                     <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center">Monthly SEM Performance (Jan - Jul 2025)</h3>
-                     <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">Track the relationship between monthly ad spend, clicks, and total conversions over the past seven months.</p>
+                     <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">Track the relationship between monthly ad spend, clicks, and total conversions. **The overall spend is driving a high volume of conversions.** Hover over the lines to see monthly totals.</p>
                     <div class="chart-container">
                         <canvas id="semMonthlyChart"></canvas>
                     </div>
@@ -145,13 +149,14 @@
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center">
                         <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
                             <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center mb-2 sm:mb-4">July Conversion Breakdown by Campaign</h3>
+                            <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">**Your brand is a strong asset.** Ads targeting your own name are the most profitable. Hover to see conversions.</p>
                             <div class="chart-container" style="height:350px;">
                                 <canvas id="semCampaignChart"></canvas>
                             </div>
                         </div>
                         <div class="prose max-w-none">
                             <h3 class="text-base sm:text-xl font-semibold text-gray-800">The Value of Your Brand</h3>
-                            <p class="text-sm sm:text-base">This breakdown from July is incredibly telling. Your investment in ads targeting your own brand name ("Lightcraft") is wildly profitable, converting users at an extremely high rate (187%). This means people are already looking for you, and these ads ensure they find you first.</p>
+                            <p class="text-sm sm:text-base">This breakdown is telling. Your investment in ads targeting your own brand name ("Lightcraft") is wildly profitable, converting users at an extremely high rate (187%). This means people are already looking for you, and these ads ensure they find you first.</p>
                             <p class="text-sm sm:text-base">Conversely, the campaign targeting competitors is less efficient and has a higher cost. While it serves a defensive purpose, it's crucial to question if that budget could be reallocated to more profitable areas, like expanding on high-performing generic keywords.</p>
                         </div>
                     </div>
@@ -215,14 +220,14 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                     <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
                         <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center">Monthly SMM Performance</h3>
-                        <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">While clicks and CTR are strong, particularly during sales, they are not translating into business results.</p>
+                        <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">While clicks and CTR are strong, particularly during sales, they are not translating into business results. Hover over the lines to see the details.</p>
                         <div class="chart-container">
                             <canvas id="smmMonthlyChart"></canvas>
                         </div>
                     </div>
                     <div class="bg-white p-4 sm:p-6 rounded-lg shadow-sm border border-gray-200">
                         <h3 class="text-base sm:text-xl font-semibold text-gray-800 text-center">Top Performing Audiences (July CTR)</h3>
-                        <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">Retargeting existing website visitors is the most effective tactic for generating clicks.</p>
+                        <p class="text-center text-gray-500 text-xs sm:text-sm mt-1 mb-4 sm:mb-6">Retargeting existing website visitors is the most effective tactic for generating clicks. Hover over the bars to see the exact CTRs.</p>
                         <div class="chart-container">
                             <canvas id="smmAudienceChart"></canvas>
                         </div>
@@ -250,7 +255,7 @@
                             <p class="text-xl sm:text-3xl font-bold text-gray-900 mt-2">$18,000</p>
                             <p class="text-xs sm:text-sm text-gray-500">($1,500 / month)</p>
                         </div>
-                        <div class="p-4 sm:p-6 bg-gray-50 rounded-lg border">
+                        <div class="p-4 sm:p-6 rounded-lg border bg-gray-50">
                             <h4 class="text-base sm:text-lg font-semibold text-gray-700">Performance Max (PMAX)</h4>
                             <p class="text-xl sm:text-3xl font-bold text-gray-900 mt-2">$24,000</p>
                             <p class="text-xs sm:text-sm text-gray-500">($2,000 / month)</p>
